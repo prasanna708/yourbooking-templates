@@ -216,6 +216,46 @@ h1,h2,h3,h4 { font-family:'Sora','Manrope',system-ui,sans-serif; text-wrap:balan
 /* about principles */
 .prin { display:grid; grid-template-columns:repeat(2,1fr); gap:18px; }
 
+/* band quick-jump chips */
+.chips { display:flex; flex-wrap:wrap; gap:10px; margin-top:22px; }
+.chips a { display:inline-flex; align-items:center; gap:7px; font-size:13px; font-weight:800; color:#22D3EE; text-decoration:none; background:rgba(34,211,238,.10); border:1px solid rgba(34,211,238,.35); border-radius:99px; padding:7px 15px; transition:background .15s; }
+.chips a:hover { background:rgba(34,211,238,.18); }
+
+/* module catalogue */
+.cat { background:#FFFFFF; border:1px solid #DCE5F0; border-radius:16px; padding:26px 26px 22px; margin-bottom:18px; }
+.cat-head { display:flex; align-items:center; gap:14px; margin-bottom:6px; }
+.cat-head .ic { width:40px; height:40px; border-radius:11px; background:rgba(34,211,238,.13); display:grid; place-items:center; flex:none; }
+.cat-head .ic svg { width:20px; height:20px; }
+.cat-head h3 { font-size:18px; font-weight:800; color:#17273E; }
+.cat-head small { display:block; font-size:12.5px; font-weight:600; color:#8A99B0; }
+.cat-cols { display:grid; grid-template-columns:repeat(3,1fr); gap:6px 26px; margin-top:14px; }
+.cat-grp h4 { font-size:11px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:#0FA8C4; margin:12px 0 8px; }
+.cat-grp ul { list-style:none; display:grid; gap:6px; }
+.cat-grp li { position:relative; padding-left:20px; font-size:13.5px; color:#3C4C64; font-weight:600; line-height:1.45; }
+.cat-grp li::before { content:""; position:absolute; left:0; top:6px; width:10px; height:10px; border-radius:3px; background:rgba(34,211,238,.22); box-shadow:0 0 0 1px #22D3EE inset; }
+
+/* roles */
+.roles { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-bottom:34px; }
+.role { background:#FFFFFF; border:1px solid #DCE5F0; border-radius:16px; padding:26px 24px; }
+.role .tag { display:inline-block; font-size:11px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:#0FA8C4; background:rgba(34,211,238,.12); border-radius:8px; padding:4px 10px; margin-bottom:14px; }
+.role h3 { font-size:17px; font-weight:800; color:#17273E; margin-bottom:8px; }
+.role p { font-size:14px; color:#52627A; margin-bottom:12px; }
+.role ul { list-style:none; display:grid; gap:7px; }
+.role li { position:relative; padding-left:20px; font-size:13.5px; color:#3C4C64; font-weight:600; }
+.role li::before { content:""; position:absolute; left:0; top:6px; width:10px; height:10px; border-radius:3px; background:rgba(34,211,238,.22); box-shadow:0 0 0 1px #22D3EE inset; }
+
+/* permission matrix */
+.mx-wrap { overflow-x:auto; border:1px solid #DCE5F0; border-radius:16px; background:#FFFFFF; }
+.mx { width:100%; min-width:640px; border-collapse:collapse; font-size:14px; }
+.mx th, .mx td { padding:12px 18px; text-align:left; border-bottom:1px solid #E8EEF6; }
+.mx thead th { background:#0B1424; color:#F4F8FD; font-family:'Sora',sans-serif; font-size:12.5px; font-weight:700; letter-spacing:.04em; white-space:nowrap; }
+.mx tbody tr:last-child td { border-bottom:none; }
+.mx td:first-child { font-weight:700; color:#17273E; }
+.mx td { color:#52627A; font-weight:600; }
+.yes { display:inline-block; font-size:11.5px; font-weight:800; color:#0E7C91; background:rgba(34,211,238,.15); border-radius:99px; padding:3px 11px; white-space:nowrap; }
+.grant { display:inline-block; font-size:11.5px; font-weight:800; color:#8A6A0F; background:rgba(252,211,77,.18); border-radius:99px; padding:3px 11px; white-space:nowrap; }
+.no { display:inline-block; font-size:11.5px; font-weight:800; color:#8A99B0; background:#EEF3F9; border-radius:99px; padding:3px 11px; white-space:nowrap; }
+
 /* CTA band */
 .cta-band { background:#0B1424; }
 .cta-in { display:flex; flex-wrap:wrap; gap:20px; align-items:center; justify-content:space-between; padding:52px 0; }
@@ -269,11 +309,14 @@ footer { background:#0B1424; border-top:1px solid #16263F; padding:52px 0 40px; 
   .grid, .steps { grid-template-columns:1fr 1fr; }
   .tpl-grid { grid-template-columns:1fr 1fr; }
   .contact-grid, .pay-grid, .prin, .grid-2 { grid-template-columns:1fr; }
+  .cat-cols { grid-template-columns:1fr 1fr; }
+  .roles { grid-template-columns:1fr; }
   .nav-links { display:none; }
 }
 @media (max-width: 600px) {
   .grid, .steps, .stat-row { grid-template-columns:1fr; }
   .tpl-grid { grid-template-columns:1fr; }
+  .cat-cols { grid-template-columns:1fr; }
   .hero { padding:56px 0 64px; }
   .sec { padding:60px 0; }
   .band { padding:48px 0 42px; }
@@ -419,6 +462,10 @@ footer { background:#0B1424; border-top:1px solid #16263F; padding:52px 0 40px; 
       <span class="eyebrow"><svg viewBox="0 0 24 24" fill="#22D3EE" aria-hidden="true"><path d="M12 1.8 14 8l6.2-2L18 12l6.2 2-6.2 2 2.2 6-6.2-2-2 6.2L10 20l-6.2 2L6 16l-6.2-2L6 12 3.8 6 10 8l2-6.2Z"/></svg>The Suite</span>
       <h1>Built around how travel agencies actually work</h1>
       <p class="lede">Not a generic CRM with travel labels — groups, seats, sectors, advances and balances are first-class. These are the modules your team signs into.</p>
+      <div class="chips">
+        <a href="#modmap">Every module &amp; what it does ↓</a>
+        <a href="#roles">Roles &amp; permissions ↓</a>
+      </div>
     </div>
   </div>
 
@@ -568,6 +615,165 @@ footer { background:#0B1424; border-top:1px solid #16263F; padding:52px 0 40px; 
         </div>
       </div>
 
+    </div>
+  </section>
+
+  <!-- ---------- full module catalogue ---------- -->
+  <section class="sec alt" id="modmap">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <span class="eyebrow"><svg viewBox="0 0 24 24" fill="#0FA8C4" aria-hidden="true"><path d="M12 1.8 14 8l6.2-2L18 12l6.2 2-6.2 2 2.2 6-6.2-2-2 6.2L10 20l-6.2 2L6 16l-6.2-2L6 12 3.8 6 10 8l2-6.2Z"/></svg>The full map</span>
+        <h2>Every module, and everything you can do in it</h2>
+        <p>This is the actual menu your team gets — no marketing gloss. Each item below is a screen in the suite today.</p>
+      </div>
+
+      <div class="cat rv">
+        <div class="cat-head">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#0FA8C4" stroke-width="1.8"><rect x="3" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.5"/></svg></span>
+          <div><h3>Home — Dashboard</h3><small>The day at a glance, the moment you sign in</small></div>
+        </div>
+        <div class="cat-cols">
+          <div class="cat-grp"><h4>See</h4><ul><li>Active groups and seats filled</li><li>Advances and balances due</li><li>New website enquiries</li></ul></div>
+          <div class="cat-grp"><h4>Go</h4><ul><li>Jump into any module you have access to</li><li>Your profile and password</li></ul></div>
+        </div>
+      </div>
+
+      <div class="cat rv">
+        <div class="cat-head">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#0FA8C4" stroke-width="1.8"><path d="M3 21v-8l9-6 9 6v8"/><path d="M9 21v-5h6v5"/><path d="M12 3v4"/></svg></span>
+          <div><h3>Umrah &amp; Haj</h3><small>Groups, bookings and everything a pilgrimage needs</small></div>
+        </div>
+        <div class="cat-cols">
+          <div class="cat-grp"><h4>Bookings</h4><ul><li>Book an Umrah package — with or without a group</li><li>Search all Umrah bookings</li><li>Cancel a package under its frozen policy</li><li>Umrah cancellation policies, versioned</li></ul></div>
+          <div class="cat-grp"><h4>Groups</h4><ul><li>Create Umrah groups — dates, hotels, flights, seats</li><li>Track expired groups</li><li>Umrah services master, per passenger</li></ul></div>
+          <div class="cat-grp"><h4>Money &amp; reports</h4><ul><li>Payment history and invoices</li><li>Cancellation history</li><li>Financial transactions report</li><li>Departure, package and month-wise reports</li><li>Passport report and passport-pending list</li></ul></div>
+        </div>
+      </div>
+
+      <div class="cat rv">
+        <div class="cat-head">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#0FA8C4" stroke-width="1.8"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></span>
+          <div><h3>Land Package</h3><small>Hotels, transport, ziyarat and visas on the ground</small></div>
+        </div>
+        <div class="cat-cols">
+          <div class="cat-grp"><h4>Bookings</h4><ul><li>Build a land package — hotels, transport, services</li><li>Visa packages on their own</li><li>Search and cancel land packages</li></ul></div>
+          <div class="cat-grp"><h4>Money</h4><ul><li>Land package advances</li><li>Cancellation history</li><li>Invoices and financial transactions</li></ul></div>
+          <div class="cat-grp"><h4>Price masters</h4><ul><li>Visa package rates</li><li>Hotel cost master</li><li>Transport cost master — AC / Non-AC apart</li><li>Visa, route and vehicle masters</li></ul></div>
+        </div>
+      </div>
+
+      <div class="cat rv">
+        <div class="cat-head">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#0FA8C4" stroke-width="1.8"><path d="M21 4 3 11l7 2.5L12.5 21 21 4Z"/></svg></span>
+          <div><h3>Airlines</h3><small>Your flights, your schedules, your own seat blocks</small></div>
+        </div>
+        <div class="cat-cols">
+          <div class="cat-grp"><h4>Bookings</h4><ul><li>Book, search and cancel flight bookings</li><li>Flight booking receipts</li></ul></div>
+          <div class="cat-grp"><h4>Inventory</h4><ul><li>Create flights and schedules</li><li>Start / stop booking per flight</li><li>Airlines blocking — hold and sell your allocation</li><li>Search blocked inventory</li></ul></div>
+          <div class="cat-grp"><h4>Masters &amp; reports</h4><ul><li>Airline companies, with logos</li><li>Layover places</li><li>Financial transactions report</li></ul></div>
+        </div>
+      </div>
+
+      <div class="cat rv">
+        <div class="cat-head">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#0FA8C4" stroke-width="1.8"><path d="M12 2v20M17 6H9.5a3 3 0 0 0 0 6H14a3 3 0 0 1 0 6H6"/></svg></span>
+          <div><h3>Accounts</h3><small>Every rupee tracked in the category it belongs to</small></div>
+        </div>
+        <div class="cat-cols">
+          <div class="cat-grp"><h4>Expenses</h4><ul><li>General expenses</li><li>Individual expenses</li><li>Group expenses</li><li>Land package expenses</li><li>Flight booking expenses</li></ul></div>
+          <div class="cat-grp"><h4>Reports</h4><ul><li>A report per expense category</li><li>Sales report across all three products</li></ul></div>
+          <div class="cat-grp"><h4>Setup</h4><ul><li>Your own expense categories</li></ul></div>
+        </div>
+      </div>
+
+      <div class="cat rv">
+        <div class="cat-head">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#0FA8C4" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 4 5.7 4 9s-1.5 6.4-4 9c-2.5-2.6-4-5.7-4-9s1.5-6.4 4-9Z"/></svg></span>
+          <div><h3>Website</h3><small>Your public site, managed from inside the suite</small></div>
+        </div>
+        <div class="cat-cols">
+          <div class="cat-grp"><h4>Publish</h4><ul><li>Umrah packages from your groups</li><li>Land services — hotels, transport, visas</li><li>Flights from your blocks</li><li>Photo galleries on every package</li></ul></div>
+          <div class="cat-grp"><h4>Presence</h4><ul><li>Website settings — theme, branding, contacts</li><li>Company gallery</li><li>Customer reviews you curate</li></ul></div>
+          <div class="cat-grp"><h4>Sell</h4><ul><li>Enquiries from the site, in your dashboard</li></ul></div>
+        </div>
+      </div>
+
+      <div class="cat rv">
+        <div class="cat-head">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#0FA8C4" stroke-width="1.8"><circle cx="12" cy="12" r="3.2"/><path d="M19 12a7 7 0 0 1-.1 1.2l2 1.6-2 3.4-2.4-1a7 7 0 0 1-2 1.2L14 21h-4l-.5-2.6a7 7 0 0 1-2-1.2l-2.4 1-2-3.4 2-1.6A7 7 0 0 1 5 12c0-.4 0-.8.1-1.2l-2-1.6 2-3.4 2.4 1a7 7 0 0 1 2-1.2L10 3h4l.5 2.6a7 7 0 0 1 2 1.2l2.4-1 2 3.4-2 1.6c.1.4.1.8.1 1.2Z"/></svg></span>
+          <div><h3>Settings</h3><small>People, branches, masters and the audit trail</small></div>
+        </div>
+        <div class="cat-cols">
+          <div class="cat-grp"><h4>People</h4><ul><li>Manage users and their logins</li><li>Manage user modules — who sees which screens</li><li>Manage branches</li><li>Profile and reset password</li></ul></div>
+          <div class="cat-grp"><h4>Company setup</h4><ul><li>Masters — countries, cities, hotels, airports, banks and more</li><li>Terms &amp; conditions on your documents</li><li>SMS recharge</li></ul></div>
+          <div class="cat-grp"><h4>Oversight</h4><ul><li>Audit logs — company-wide activity trail</li><li>Login report</li><li>Notification report</li><li>Enquiries and enquiry report</li></ul></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- roles & permissions ---------- -->
+  <section class="sec" id="roles">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <span class="eyebrow"><svg viewBox="0 0 24 24" fill="#0FA8C4" aria-hidden="true"><path d="M12 1.8 14 8l6.2-2L18 12l6.2 2-6.2 2 2.2 6-6.2-2-2 6.2L10 20l-6.2 2L6 16l-6.2-2L6 12 3.8 6 10 8l2-6.2Z"/></svg>Roles &amp; permissions</span>
+        <h2>Roles decide scope. Module grants decide screens.</h2>
+        <p>Two controls work together: a person's role sets how far they can see, and per-user module grants set exactly which screens they get. Your Company Admin manages both from Settings — no call to us needed.</p>
+      </div>
+
+      <div class="roles">
+        <div class="role rv">
+          <span class="tag">Role 1</span>
+          <h3>Company Admin</h3>
+          <p>Owns the company account — every branch, every module, every setting.</p>
+          <ul>
+            <li>All modules across all branches</li>
+            <li>Creates users, branches and module grants</li>
+            <li>Masters, terms and website settings</li>
+            <li>Audit logs — reserved for this role</li>
+          </ul>
+        </div>
+        <div class="role rv">
+          <span class="tag">Role 2</span>
+          <h3>Branch Admin</h3>
+          <p>Runs one branch day to day, inside the modules granted to them.</p>
+          <ul>
+            <li>Bookings, groups and money for their branch</li>
+            <li>Branch staff oversight</li>
+            <li>Reports scoped to their branch</li>
+          </ul>
+        </div>
+        <div class="role rv">
+          <span class="tag">Role 3</span>
+          <h3>Staff</h3>
+          <p>Sees exactly the screens their work needs — nothing else appears in the menu.</p>
+          <ul>
+            <li>Only the modules granted to them</li>
+            <li>Booking desks see bookings; accounts staff see expenses</li>
+            <li>Own profile and password</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mx-wrap rv">
+        <table class="mx">
+          <thead>
+            <tr><th>What</th><th>Company Admin</th><th>Branch Admin</th><th>Staff</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Bookings &amp; cancellations — Umrah, Land, Flights</td><td><span class="yes">All branches</span></td><td><span class="yes">Their branch</span></td><td><span class="grant">If granted</span></td></tr>
+            <tr><td>Umrah group creation</td><td><span class="yes">Yes</span></td><td><span class="grant">If granted</span></td><td><span class="grant">If granted</span></td></tr>
+            <tr><td>Advances, receipts &amp; invoices</td><td><span class="yes">All branches</span></td><td><span class="yes">Their branch</span></td><td><span class="grant">If granted</span></td></tr>
+            <tr><td>Expenses &amp; expense reports</td><td><span class="yes">Yes</span></td><td><span class="grant">If granted</span></td><td><span class="grant">If granted</span></td></tr>
+            <tr><td>Financial &amp; sales reports</td><td><span class="yes">Yes</span></td><td><span class="grant">If granted</span></td><td><span class="grant">If granted</span></td></tr>
+            <tr><td>Price masters &amp; company masters</td><td><span class="yes">Yes</span></td><td><span class="grant">If granted</span></td><td><span class="no">No</span></td></tr>
+            <tr><td>Website — publish &amp; enquiries</td><td><span class="yes">Yes</span></td><td><span class="grant">If granted</span></td><td><span class="grant">If granted</span></td></tr>
+            <tr><td>Users, branches &amp; module grants</td><td><span class="yes">Yes</span></td><td><span class="no">No</span></td><td><span class="no">No</span></td></tr>
+            <tr><td>Audit logs &amp; login reports</td><td><span class="yes">Yes</span></td><td><span class="no">No</span></td><td><span class="no">No</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin-top:16px; font-size:13.5px; color:#8A99B0;">Module subscription is set per company when we onboard you; inside it, your Company Admin grants modules per user. Platform administration stays with the YourBooking team.</p>
     </div>
   </section>
 
@@ -995,7 +1201,11 @@ footer { background:#0B1424; border-top:1px solid #16263F; padding:52px 0 40px; 
     observePage(pg);
     if (key === 'login') setTimeout(function () { var m = document.getElementById('mob'); if (m) m.focus(); }, 80);
   }
-  function route() { showKey(routes[location.hash] || 'home'); }
+  function route() {
+    if (location.hash in routes) { showKey(routes[location.hash]); }
+    else if (!document.querySelector('.page.show')) { showKey('home'); }
+    // any other hash is an in-page anchor: leave the page alone, let the browser scroll
+  }
   window.addEventListener('hashchange', route);
   document.addEventListener('click', function (e) {
     var a = e.target.closest ? e.target.closest('a[href^="#/"]') : null;
