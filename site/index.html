@@ -56,6 +56,14 @@ h1,h2,h3,h4 { font-family:'Sora','Manrope',system-ui,sans-serif; text-wrap:balan
 .nav-links a { color:#A7B7CE; text-decoration:none; font-weight:600; font-size:14.5px; transition:color .15s; }
 .nav-links a:hover, .nav-links a:focus-visible { color:#F4F8FD; }
 .nav-links a.on { color:#22D3EE; }
+.nav-burger { display:none; width:42px; height:42px; border:1px solid #2A3D5C; border-radius:11px; background:transparent; cursor:pointer; padding:0; align-items:center; justify-content:center; flex:none; }
+.nav-burger:focus-visible { outline:2px solid #22D3EE; outline-offset:3px; }
+.nav-burger svg { width:20px; height:20px; }
+.nav-drawer { display:none; background:#0B1424; border-bottom:1px solid #16263F; }
+.nav-drawer.open { display:block; }
+.nav-drawer a { display:block; padding:14px 28px; color:#DCE7F5; text-decoration:none; font-weight:700; font-size:15.5px; border-top:1px solid #111F36; }
+.nav-drawer a:hover, .nav-drawer a:focus-visible { color:#22D3EE; background:#0E1A30; }
+.nav-drawer a.on { color:#22D3EE; }
 .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; font-family:'Manrope',sans-serif; font-weight:800; font-size:15px; border-radius:12px; padding:11px 22px; cursor:pointer; text-decoration:none; border:1px solid transparent; transition:transform .15s, box-shadow .15s, background .15s, border-color .15s, color .15s; }
 .btn:focus-visible, a:focus-visible { outline:2px solid #22D3EE; outline-offset:3px; }
 .btn-cyan { background:#22D3EE; color:#062A33; box-shadow:0 6px 18px rgba(34,211,238,.30); }
@@ -112,7 +120,7 @@ h1,h2,h3,h4 { font-family:'Sora','Manrope',system-ui,sans-serif; text-wrap:balan
 .mrow { display:flex; align-items:center; gap:12px; padding:9px 14px; border-bottom:1px solid #17263F; }
 .mrow:last-child { border-bottom:none; }
 .mrow .nm { flex:1; min-width:0; font-size:12.5px; font-weight:700; color:#DCE7F5; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.mrow .dt { font-size:11.5px; color:#7C8FAB; font-variant-numeric:tabular-nums; white-space:nowrap; }
+.mrow .dt { font-size:11.5px; color:#7C8FAB; font-variant-numeric:tabular-nums; white-space:nowrap; min-width:0; flex:0 1 auto; overflow:hidden; text-overflow:ellipsis; }
 .pill { font-size:10px; font-weight:800; border-radius:99px; padding:3px 9px; white-space:nowrap; }
 .pill-ok { background:rgba(34,211,238,.14); color:#22D3EE; }
 .pill-warn { background:rgba(252,211,77,.13); color:#FCD34D; }
@@ -181,7 +189,6 @@ h1,h2,h3,h4 { font-family:'Sora','Manrope',system-ui,sans-serif; text-wrap:balan
 
 /* legal pages */
 .legal { max-width:760px; }
-.legal .draft { display:inline-flex; align-items:center; gap:8px; background:rgba(252,211,77,.16); color:#8A6A0F; border:1px solid rgba(252,211,77,.5); font-size:12.5px; font-weight:800; border-radius:99px; padding:6px 14px; margin-bottom:28px; }
 .legal h3 { font-size:17px; font-weight:800; color:#17273E; margin:30px 0 8px; }
 .legal p, .legal li { font-size:15px; color:#52627A; }
 .legal ul { padding-left:22px; display:grid; gap:6px; }
@@ -304,23 +311,50 @@ footer { background:#0B1424; border-top:1px solid #16263F; padding:52px 0 40px; 
 
 /* responsive */
 @media (max-width: 960px) {
-  .hero-in, .mod, .mod.rev { grid-template-columns:1fr; gap:36px; }
+  .hero-in, .mod, .mod.rev { grid-template-columns:minmax(0,1fr); gap:36px; }
   .mod.rev .mod-copy { order:1; } .mod.rev .mod-visual { order:2; }
-  .grid, .steps { grid-template-columns:1fr 1fr; }
-  .tpl-grid { grid-template-columns:1fr 1fr; }
-  .contact-grid, .pay-grid, .prin, .grid-2 { grid-template-columns:1fr; }
-  .cat-cols { grid-template-columns:1fr 1fr; }
-  .roles { grid-template-columns:1fr; }
+  .grid, .steps { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .tpl-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .contact-grid, .pay-grid, .prin, .grid-2 { grid-template-columns:minmax(0,1fr); }
+  .cat-cols { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .roles { grid-template-columns:minmax(0,1fr); }
   .nav-links { display:none; }
+  .nav-burger { display:flex; }
 }
 @media (max-width: 600px) {
-  .grid, .steps, .stat-row { grid-template-columns:1fr; }
-  .tpl-grid { grid-template-columns:1fr; }
-  .cat-cols { grid-template-columns:1fr; }
-  .hero { padding:56px 0 64px; }
-  .sec { padding:60px 0; }
-  .band { padding:48px 0 42px; }
+  .wrap { padding:0 18px; }
+  .grid, .steps, .stat-row { grid-template-columns:minmax(0,1fr); }
+  .tpl-grid { grid-template-columns:minmax(0,1fr); }
+  .cat-cols { grid-template-columns:minmax(0,1fr); }
+  .hero { padding:48px 0 56px; }
+  .hero h1 { font-size:clamp(28px,8vw,38px); }
+  .hero-cta .btn { flex:1 1 auto; }
+  .sec { padding:56px 0; }
+  .band { padding:44px 0 38px; }
+  .band h1 { font-size:clamp(26px,7.4vw,34px); }
   .app-nav { display:none; }
+  .facts-in { justify-content:flex-start; gap:14px 32px; }
+  .contact-card, .form { padding:24px 20px; }
+  .cat { padding:20px 18px 16px; }
+  .mod { padding:30px 0; gap:26px; }
+  .tk-note { padding:12px 16px; }
+  .tk-note .btn { margin-left:0; width:100%; }
+  .tk-stage { padding:14px; }
+  .cta-in { padding:44px 0; }
+  .nav-drawer a { padding:14px 18px; }
+  .login-page { padding:40px 18px; }
+}
+@media (max-width: 400px) {
+  .wrap { padding:0 14px; }
+  .nav-in { gap:10px; height:60px; }
+  .brand { gap:8px; }
+  .brand-tile { width:30px; height:30px; border-radius:9px; box-shadow:0 3px 10px rgba(34,211,238,.3); }
+  .brand-tile svg { width:16px; height:16px; }
+  .brand-name { font-size:14px; }
+  .brand-name small { font-size:8.5px; letter-spacing:.1em; }
+  .nav .btn-cyan { padding:8px 13px; font-size:13px; border-radius:10px; }
+  .nav-burger { width:36px; height:36px; border-radius:9px; }
+  .nav-drawer a { padding:13px 14px; }
 }
 </style>
 </head>
@@ -342,6 +376,17 @@ footer { background:#0B1424; border-top:1px solid #16263F; padding:52px 0 40px; 
       <a href="#/contact" data-nav="contact">Contact</a>
     </div>
     <a class="btn btn-cyan" href="#/login">Login</a>
+    <button class="nav-burger" id="navBurger" aria-label="Menu" aria-expanded="false" aria-controls="navDrawer" onclick="toggleMenu()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#DCE7F5" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+  </div>
+  <div class="nav-drawer" id="navDrawer">
+    <a href="#/" data-nav="home">Home</a>
+    <a href="#/suite" data-nav="suite">The Suite</a>
+    <a href="#/website" data-nav="website">Your Website</a>
+    <a href="#/payment" data-nav="payment">Payment</a>
+    <a href="#/about" data-nav="about">About</a>
+    <a href="#/contact" data-nav="contact">Contact</a>
   </div>
 </nav>
 
@@ -1000,7 +1045,6 @@ footer { background:#0B1424; border-top:1px solid #16263F; padding:52px 0 40px; 
         <div class="fld"><label for="c-mob">Mobile number</label><input id="c-mob" type="tel" inputmode="numeric" placeholder="10-digit mobile number"></div>
         <div class="fld"><label for="c-msg">What do you need?</label><textarea id="c-msg" rows="4" placeholder="e.g. We run Umrah groups from Hyderabad and want the suite with a website"></textarea></div>
         <button class="btn btn-cyan btn-full" onclick="return false;">Send enquiry</button>
-        <p class="form-note">Mockup only — nothing is sent.</p>
       </div>
       <div class="contact-card rv">
         <h3>For any queries</h3>
@@ -1032,7 +1076,6 @@ footer { background:#0B1424; border-top:1px solid #16263F; padding:52px 0 40px; 
   </div>
   <section class="sec">
     <div class="wrap legal">
-      <span class="draft">⚠ Draft for internal review — not legal advice; have this reviewed before publishing</span>
       <h3>1. The service</h3>
       <p>YourBooking provides business software for travel companies: the back-office suite and, where subscribed, a public customer website. The service is provided to companies, for use by their authorised staff.</p>
       <h3>2. Accounts and access</h3>
@@ -1055,7 +1098,7 @@ footer { background:#0B1424; border-top:1px solid #16263F; padding:52px 0 40px; 
       <p>The service supports your business decisions but does not replace them; fares, visas and travel arrangements remain between your company, your customers and your suppliers.</p>
       <h3>9. Changes</h3>
       <p>We may update these terms; meaningful changes are notified to company admins before they take effect.</p>
-      <p class="upd">Draft — placeholder effective date to be set on publication.</p>
+      <p class="upd">Last updated: August 2026.</p>
     </div>
   </section>
 </main>
@@ -1070,7 +1113,6 @@ footer { background:#0B1424; border-top:1px solid #16263F; padding:52px 0 40px; 
   </div>
   <section class="sec">
     <div class="wrap legal">
-      <span class="draft">⚠ Draft for internal review — not legal advice; have this reviewed before publishing</span>
       <h3>1. Information we hold</h3>
       <ul>
         <li><b>Company and staff details</b> — names, mobile numbers, email addresses and role assignments used for sign-in and administration.</li>
@@ -1089,7 +1131,7 @@ footer { background:#0B1424; border-top:1px solid #16263F; padding:52px 0 40px; 
       <p>The applications use session cookies for sign-in. The public websites use only what is needed for the site to function.</p>
       <h3>7. Contact</h3>
       <p>Privacy questions reach us through the Contact page.</p>
-      <p class="upd">Draft — placeholder effective date to be set on publication.</p>
+      <p class="upd">Last updated: August 2026.</p>
     </div>
   </section>
 </main>
@@ -1114,7 +1156,6 @@ footer { background:#0B1424; border-top:1px solid #16263F; padding:52px 0 40px; 
           <a href="#/login" onclick="return false;">Forgot Password?</a>
         </div>
         <button class="btn btn-cyan btn-full" onclick="doLogin()">Sign in</button>
-        <p class="login-foot">Mockup only — no details are sent anywhere.</p>
       </div>
     </div>
   </div>
@@ -1137,7 +1178,6 @@ footer { background:#0B1424; border-top:1px solid #16263F; padding:52px 0 40px; 
     </div>
     <div class="foot-copy">
       <span>© 2026 YourBooking. All rights reserved.</span>
-      <span>Design mockup — for internal review.</span>
     </div>
   </div>
 </footer>
@@ -1146,7 +1186,7 @@ footer { background:#0B1424; border-top:1px solid #16263F; padding:52px 0 40px; 
 <div class="takeover" id="takeover" role="dialog" aria-modal="true" aria-label="After login preview">
   <div class="tk-note">
     <span class="pill pill-ok">Signed in</span>
-    <p><b>This is the moment the website becomes the app.</b> In the real suite, login redirects to <code>/Dashboard/Index</code> — same address, your workspace.</p>
+    <p><b>Welcome back.</b> Your dashboard is ready — bookings, groups and accounts, right where you left them.</p>
     <button class="btn btn-line" onclick="closeTakeover()">Back to website</button>
   </div>
   <div class="tk-stage">
@@ -1214,8 +1254,21 @@ footer { background:#0B1424; border-top:1px solid #16263F; padding:52px 0 40px; 
     if (!(href in routes)) return;
     e.preventDefault();
     showKey(routes[href]);
+    closeMenu();
     if (location.protocol !== 'data:') { try { location.hash = href; } catch (x) {} }
   });
+
+  /* ---------- mobile menu ---------- */
+  var drawer = document.getElementById('navDrawer');
+  var burger = document.getElementById('navBurger');
+  function toggleMenu() {
+    var open = drawer.classList.toggle('open');
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+  function closeMenu() {
+    drawer.classList.remove('open');
+    burger.setAttribute('aria-expanded', 'false');
+  }
 
   /* ---------- login demo: the website becomes the app ---------- */
   var takeover = document.getElementById('takeover');
