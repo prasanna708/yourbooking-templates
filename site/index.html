@@ -1,0 +1,1033 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>YourBooking Landing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap">
+
+<style>
+/* ============================================================
+   YourBooking — public site mockup (multi-page)
+   Pages: Home · The Suite · Your Website · Payment · About ·
+          Contact · Terms · Privacy · Login
+   One file for review: hash routes stand in for real pages.
+   In the MVC app each page becomes its own view.
+   ------------------------------------------------------------
+   ink-950 #0B1424 · ink-900 #101E33 · ink-800 #16263F
+   cyan #22D3EE · cyan-deep #0FA8C4 · cyan-ink #062A33
+   mist #F2F6FB · card #FFFFFF · line #DCE5F0
+   slate #52627A · ink-txt #17273E · fog #A7B7CE · dim #5F7191
+   ============================================================ */
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior:auto; }
+  *, *::before, *::after { animation:none !important; transition:none !important; }
+}
+
+body {
+  background:#0B1424; color:#17273E;
+  font-family:'Manrope','Segoe UI',system-ui,sans-serif;
+  font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4 { font-family:'Sora','Manrope',system-ui,sans-serif; text-wrap:balance; }
+.wrap { max-width:1120px; margin:0 auto; padding:0 28px; }
+
+/* ---------- page switching ---------- */
+.page { display:none; }
+.page.show { display:block; }
+
+/* ---------- ornament + eyebrow ---------- */
+.eyebrow { display:inline-flex; align-items:center; gap:8px; font-size:12px; font-weight:800; letter-spacing:.16em; text-transform:uppercase; }
+.eyebrow svg { width:13px; height:13px; flex:none; }
+
+/* ---------- nav ---------- */
+.nav { position:sticky; top:0; z-index:50; background:rgba(11,20,36,.88); backdrop-filter:blur(12px); border-bottom:1px solid #16263F; }
+.nav-in { display:flex; align-items:center; gap:24px; height:68px; }
+.brand { display:flex; align-items:center; gap:11px; text-decoration:none; margin-right:auto; }
+.brand-tile { width:38px; height:38px; border-radius:11px; flex:none; background:linear-gradient(140deg,#22D3EE,#0FA8C4); display:grid; place-items:center; box-shadow:0 4px 14px rgba(34,211,238,.35); }
+.brand-tile svg { width:20px; height:20px; }
+.brand-name { font-family:'Sora',sans-serif; font-weight:700; font-size:17px; color:#F4F8FD; line-height:1.15; }
+.brand-name small { display:block; font-family:'Manrope',sans-serif; font-weight:600; font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:#22D3EE; }
+.nav-links { display:flex; gap:22px; }
+.nav-links a { color:#A7B7CE; text-decoration:none; font-weight:600; font-size:14.5px; transition:color .15s; }
+.nav-links a:hover, .nav-links a:focus-visible { color:#F4F8FD; }
+.nav-links a.on { color:#22D3EE; }
+.btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; font-family:'Manrope',sans-serif; font-weight:800; font-size:15px; border-radius:12px; padding:11px 22px; cursor:pointer; text-decoration:none; border:1px solid transparent; transition:transform .15s, box-shadow .15s, background .15s, border-color .15s, color .15s; }
+.btn:focus-visible, a:focus-visible { outline:2px solid #22D3EE; outline-offset:3px; }
+.btn-cyan { background:#22D3EE; color:#062A33; box-shadow:0 6px 18px rgba(34,211,238,.30); }
+.btn-cyan:hover { transform:translateY(-1px); box-shadow:0 10px 24px rgba(34,211,238,.38); }
+.btn-line { background:transparent; color:#E7EFF9; border-color:#2A3D5C; }
+.btn-line:hover { border-color:#22D3EE; color:#22D3EE; }
+.btn-line-dk { background:transparent; color:#17273E; border-color:#BFD3E8; }
+.btn-line-dk:hover { border-color:#0FA8C4; color:#0FA8C4; }
+
+/* ---------- page head band (inner pages) ---------- */
+.band { position:relative; overflow:hidden; padding:64px 0 56px; background:#0B1424; }
+.band::before { content:""; position:absolute; inset:0; background:radial-gradient(520px 260px at 82% 0%, rgba(34,211,238,.13), transparent 65%); }
+.band::after { content:""; position:absolute; inset:0; opacity:.45; background-image:linear-gradient(#16263F 1px,transparent 1px),linear-gradient(90deg,#16263F 1px,transparent 1px); background-size:56px 56px; mask-image:radial-gradient(640px 320px at 75% 20%, rgba(0,0,0,.5), transparent 75%); -webkit-mask-image:radial-gradient(640px 320px at 75% 20%, rgba(0,0,0,.5), transparent 75%); }
+.band .wrap { position:relative; z-index:1; }
+.band .eyebrow { color:#22D3EE; margin-bottom:14px; }
+.band h1 { font-size:clamp(30px,3.8vw,44px); font-weight:800; color:#F4F8FD; letter-spacing:-.015em; line-height:1.14; }
+.band p.lede { margin-top:16px; max-width:38em; font-size:17px; color:#A7B7CE; }
+
+/* ---------- hero (home) ---------- */
+.hero { position:relative; overflow:hidden; padding:84px 0 96px; }
+.hero::before { content:""; position:absolute; inset:0; background:radial-gradient(600px 340px at 85% 8%, rgba(34,211,238,.14), transparent 65%), radial-gradient(520px 300px at 8% 92%, rgba(34,211,238,.07), transparent 60%); }
+.hero::after { content:""; position:absolute; inset:0; opacity:.5; background-image:linear-gradient(#16263F 1px,transparent 1px),linear-gradient(90deg,#16263F 1px,transparent 1px); background-size:56px 56px; mask-image:radial-gradient(720px 480px at 68% 30%, rgba(0,0,0,.5), transparent 75%); -webkit-mask-image:radial-gradient(720px 480px at 68% 30%, rgba(0,0,0,.5), transparent 75%); }
+.hero-in { position:relative; z-index:1; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.05fr); gap:56px; align-items:center; }
+.hero .eyebrow { color:#22D3EE; margin-bottom:18px; }
+.hero h1 { font-size:clamp(34px,4.4vw,52px); font-weight:800; line-height:1.12; color:#F4F8FD; letter-spacing:-.015em; }
+.hero h1 em { font-style:normal; color:#22D3EE; }
+.hero p.lede { margin:20px 0 30px; max-width:34em; font-size:17.5px; color:#A7B7CE; }
+.hero-cta { display:flex; gap:14px; flex-wrap:wrap; }
+.hero-note { margin-top:26px; font-size:13.5px; color:#5F7191; }
+.hero-note strong { color:#A7B7CE; font-weight:700; }
+
+/* ---------- dashboard frame ---------- */
+.frame { background:#101E33; border:1px solid #22354F; border-radius:18px; box-shadow:0 30px 70px rgba(2,8,20,.55), 0 2px 0 rgba(255,255,255,.03) inset; overflow:hidden; }
+.frame-bar { display:flex; align-items:center; gap:10px; padding:11px 16px; background:#0D1930; border-bottom:1px solid #1B2C47; }
+.dot { width:10px; height:10px; border-radius:50%; background:#25395A; }
+.frame-url { margin-left:6px; flex:1; max-width:340px; background:#0B1424; border:1px solid #1B2C47; border-radius:8px; padding:5px 12px; font-size:12px; color:#7C8FAB; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.frame-url b { color:#22D3EE; font-weight:700; }
+.app-top { display:flex; align-items:center; gap:14px; padding:11px 16px; background:#0F1C33; border-bottom:1px solid #1B2C47; }
+.app-logo { display:flex; align-items:center; gap:8px; font-family:'Sora',sans-serif; font-weight:700; font-size:12.5px; color:#F4F8FD; }
+.app-logo .brand-tile { width:24px; height:24px; border-radius:7px; box-shadow:none; }
+.app-logo .brand-tile svg { width:13px; height:13px; }
+.app-nav { display:flex; gap:14px; margin-left:8px; min-width:0; overflow:hidden; }
+.app-nav span { font-size:11.5px; font-weight:700; color:#7C8FAB; white-space:nowrap; }
+.app-nav span.on { color:#22D3EE; }
+.app-user { margin-left:auto; width:22px; height:22px; border-radius:50%; flex:none; background:linear-gradient(140deg,#22D3EE,#0FA8C4); color:#062A33; font-size:10px; font-weight:800; display:grid; place-items:center; }
+.app-body { padding:16px; background:#0C1830; }
+.stat-row { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:12px; }
+.stat { background:#122343; border:1px solid #1E3252; border-radius:12px; padding:11px 13px; }
+.stat small { display:block; font-size:10px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:#7C8FAB; margin-bottom:4px; }
+.stat b { font-family:'Sora',sans-serif; font-size:17px; font-weight:700; color:#F4F8FD; font-variant-numeric:tabular-nums; }
+.stat b i { font-style:normal; font-size:11px; color:#22D3EE; font-weight:700; }
+.mini-table { background:#0F1E3A; border:1px solid #1B2C47; border-radius:12px; overflow:hidden; }
+.mini-table header { padding:9px 14px; font-size:11px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:#7C8FAB; border-bottom:1px solid #1B2C47; }
+.mrow { display:flex; align-items:center; gap:12px; padding:9px 14px; border-bottom:1px solid #17263F; }
+.mrow:last-child { border-bottom:none; }
+.mrow .nm { flex:1; min-width:0; font-size:12.5px; font-weight:700; color:#DCE7F5; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.mrow .dt { font-size:11.5px; color:#7C8FAB; font-variant-numeric:tabular-nums; white-space:nowrap; }
+.pill { font-size:10px; font-weight:800; border-radius:99px; padding:3px 9px; white-space:nowrap; }
+.pill-ok { background:rgba(34,211,238,.14); color:#22D3EE; }
+.pill-warn { background:rgba(252,211,77,.13); color:#FCD34D; }
+.bars { display:flex; align-items:flex-end; gap:5px; height:44px; margin-top:12px; padding:0 2px; }
+.bars i { flex:1; border-radius:4px 4px 0 0; background:linear-gradient(180deg,#22D3EE,#157F97); opacity:.85; }
+
+/* ---------- sections ---------- */
+.sec { background:#F2F6FB; padding:84px 0; }
+.sec.alt { background:#FFFFFF; }
+.sec-head { max-width:660px; margin-bottom:44px; }
+.sec-head .eyebrow { color:#0FA8C4; margin-bottom:14px; }
+.sec-head h2 { font-size:clamp(25px,3.1vw,35px); font-weight:800; color:#17273E; letter-spacing:-.01em; line-height:1.18; }
+.sec-head p { margin-top:14px; color:#52627A; font-size:16.5px; max-width:38em; }
+
+/* facts strip */
+.facts { background:#0B1424; border-top:1px solid #16263F; border-bottom:1px solid #16263F; }
+.facts-in { display:flex; flex-wrap:wrap; gap:12px 48px; align-items:center; justify-content:space-between; padding:22px 0; }
+.fact { display:flex; align-items:baseline; gap:9px; }
+.fact b { font-family:'Sora',sans-serif; font-size:20px; font-weight:700; color:#F4F8FD; font-variant-numeric:tabular-nums; }
+.fact span { font-size:13px; font-weight:600; color:#7C8FAB; }
+
+/* cards */
+.grid { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+.card { background:#FFFFFF; border:1px solid #DCE5F0; border-radius:16px; padding:26px 24px; transition:transform .18s, box-shadow .18s, border-color .18s; }
+.sec.alt .card { background:#F7FAFD; }
+.card:hover { transform:translateY(-3px); box-shadow:0 16px 34px rgba(23,39,62,.10); border-color:#BFD3E8; }
+.card .ic { width:42px; height:42px; border-radius:12px; margin-bottom:16px; background:rgba(34,211,238,.13); display:grid; place-items:center; }
+.card .ic svg { width:21px; height:21px; }
+.card h3 { font-size:17px; font-weight:700; color:#17273E; margin-bottom:8px; }
+.card p { font-size:14.5px; color:#52627A; }
+.card .more { display:inline-block; margin-top:14px; font-size:13.5px; font-weight:800; color:#0FA8C4; text-decoration:none; }
+.card .more:hover { text-decoration:underline; }
+
+/* module deep rows (suite page) */
+.mod { display:grid; grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr); gap:44px; align-items:center; padding:38px 0; border-top:1px solid #DCE5F0; }
+.mod:first-of-type { border-top:none; padding-top:8px; }
+.mod.rev { grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr); }
+.mod.rev .mod-copy { order:2; }
+.mod.rev .mod-visual { order:1; }
+.mod-copy .eyebrow { color:#0FA8C4; margin-bottom:10px; }
+.mod-copy h3 { font-size:22px; font-weight:800; color:#17273E; margin-bottom:10px; }
+.mod-copy p { font-size:15px; color:#52627A; margin-bottom:14px; }
+.mod-copy ul { list-style:none; display:grid; gap:8px; }
+.mod-copy li { position:relative; padding-left:24px; font-size:14.5px; color:#3C4C64; font-weight:600; }
+.mod-copy li::before { content:""; position:absolute; left:0; top:7px; width:12px; height:12px; border-radius:4px; background:rgba(34,211,238,.22); box-shadow:0 0 0 1px #22D3EE inset; }
+.mod-visual .frame { box-shadow:0 22px 48px rgba(23,39,62,.16); }
+
+/* theme cards (website page) */
+.tpl-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+.tpl { background:#FFFFFF; border:1px solid #DCE5F0; border-radius:14px; overflow:hidden; transition:transform .18s, box-shadow .18s; }
+.tpl:hover { transform:translateY(-3px); box-shadow:0 14px 28px rgba(23,39,62,.10); }
+.tpl .sw { height:86px; display:flex; }
+.tpl .sw i { flex:1; }
+.tpl figcaption { padding:12px 15px 14px; }
+.tpl b { display:block; font-family:'Sora',sans-serif; font-size:14px; font-weight:700; color:#17273E; }
+.tpl small { font-size:11.5px; color:#52627A; }
+
+/* steps */
+.steps { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; counter-reset:step; }
+.step { position:relative; background:#FFFFFF; border:1px solid #DCE5F0; border-radius:16px; padding:28px 24px 24px; }
+.sec.alt .step { background:#F7FAFD; }
+.step::before { counter-increment:step; content:counter(step, decimal-leading-zero); position:absolute; top:22px; right:22px; font-family:'Sora',sans-serif; font-size:13px; font-weight:700; color:#0FA8C4; background:rgba(34,211,238,.12); border-radius:8px; padding:4px 9px; }
+.step h3 { font-size:16.5px; font-weight:700; color:#17273E; margin-bottom:8px; padding-right:52px; }
+.step p { font-size:14.5px; color:#52627A; }
+
+/* legal pages */
+.legal { max-width:760px; }
+.legal .draft { display:inline-flex; align-items:center; gap:8px; background:rgba(252,211,77,.16); color:#8A6A0F; border:1px solid rgba(252,211,77,.5); font-size:12.5px; font-weight:800; border-radius:99px; padding:6px 14px; margin-bottom:28px; }
+.legal h3 { font-size:17px; font-weight:800; color:#17273E; margin:30px 0 8px; }
+.legal p, .legal li { font-size:15px; color:#52627A; }
+.legal ul { padding-left:22px; display:grid; gap:6px; }
+.legal .upd { font-size:13px; color:#8A99B0; margin-top:36px; }
+
+/* contact */
+.contact-grid { display:grid; grid-template-columns:1.05fr .95fr; gap:44px; align-items:start; }
+.contact-card { background:#0B1424; border-radius:20px; padding:36px; color:#DCE7F5; }
+.contact-card h3 { font-size:20px; font-weight:700; color:#F4F8FD; margin-bottom:6px; }
+.contact-card > p { font-size:14.5px; color:#A7B7CE; margin-bottom:22px; }
+.contact-line { display:flex; align-items:center; gap:12px; padding:12px 0; border-top:1px solid #1B2C47; font-weight:700; font-size:15px; color:#E7EFF9; }
+.contact-line svg { width:18px; height:18px; flex:none; }
+.contact-line span { font-variant-numeric:tabular-nums; }
+.form { background:#FFFFFF; border:1px solid #DCE5F0; border-radius:20px; padding:30px; }
+.sec .form { box-shadow:0 18px 40px rgba(23,39,62,.08); }
+.fld { margin-bottom:16px; }
+.fld label { display:block; font-size:12.5px; font-weight:800; color:#17273E; letter-spacing:.03em; margin-bottom:7px; }
+.fld input, .fld textarea { width:100%; border:1.5px solid #DCE5F0; border-radius:11px; padding:12px 14px; font-family:'Manrope',sans-serif; font-size:15px; color:#17273E; background:#F7FAFD; resize:vertical; }
+.fld input:focus, .fld textarea:focus { outline:none; border-color:#22D3EE; background:#FFFFFF; box-shadow:0 0 0 3px rgba(34,211,238,.18); }
+.form-note { margin-top:14px; text-align:center; font-size:12px; color:#8A99B0; }
+
+/* payment page */
+.pay-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+.pay-card { background:#FFFFFF; border:1px solid #DCE5F0; border-radius:16px; padding:28px 26px; }
+.pay-card h3 { font-size:18px; font-weight:800; color:#17273E; margin-bottom:10px; }
+.pay-card p { font-size:14.5px; color:#52627A; margin-bottom:14px; }
+.pay-card ul { list-style:none; display:grid; gap:8px; margin-bottom:18px; }
+.pay-card li { position:relative; padding-left:24px; font-size:14.5px; color:#3C4C64; font-weight:600; }
+.pay-card li::before { content:""; position:absolute; left:0; top:7px; width:12px; height:12px; border-radius:4px; background:rgba(34,211,238,.22); box-shadow:0 0 0 1px #22D3EE inset; }
+.pay-tag { display:inline-block; font-size:11px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:#0FA8C4; background:rgba(34,211,238,.12); border-radius:8px; padding:4px 10px; margin-bottom:14px; }
+
+/* about principles */
+.prin { display:grid; grid-template-columns:repeat(2,1fr); gap:18px; }
+
+/* CTA band */
+.cta-band { background:#0B1424; }
+.cta-in { display:flex; flex-wrap:wrap; gap:20px; align-items:center; justify-content:space-between; padding:52px 0; }
+.cta-in h2 { font-size:clamp(22px,2.8vw,30px); font-weight:800; color:#F4F8FD; letter-spacing:-.01em; }
+.cta-in p { color:#A7B7CE; font-size:15px; margin-top:6px; max-width:34em; }
+
+/* footer */
+footer { background:#0B1424; border-top:1px solid #16263F; padding:52px 0 40px; }
+.foot-in { display:flex; flex-wrap:wrap; gap:28px; align-items:center; justify-content:space-between; }
+.foot-links { display:flex; flex-wrap:wrap; gap:10px 26px; }
+.foot-links a { color:#A7B7CE; text-decoration:none; font-size:14px; font-weight:600; }
+.foot-links a:hover { color:#22D3EE; }
+.foot-copy { width:100%; margin-top:26px; padding-top:22px; border-top:1px solid #16263F; font-size:12.5px; color:#5F7191; display:flex; flex-wrap:wrap; gap:8px 24px; justify-content:space-between; }
+
+/* ---------- login page ---------- */
+.login-page { min-height:calc(100vh - 68px); display:grid; place-items:center; padding:64px 28px; position:relative; overflow:hidden; }
+.login-page::before { content:""; position:absolute; inset:0; background:radial-gradient(560px 320px at 50% 0%, rgba(34,211,238,.12), transparent 65%); }
+.login { position:relative; width:100%; max-width:400px; background:#FFFFFF; border-radius:20px; overflow:hidden; box-shadow:0 40px 90px rgba(2,8,20,.55); }
+.login-head { background:#0B1424; padding:22px 26px; display:flex; align-items:center; gap:12px; }
+.login-head .brand-tile { width:34px; height:34px; }
+.login-head h3 { font-size:16px; font-weight:700; color:#F4F8FD; }
+.login-head small { display:block; font-size:11.5px; color:#7C8FAB; font-weight:600; }
+.login-body { padding:26px; }
+.login-row { display:flex; align-items:center; justify-content:space-between; margin:4px 0 18px; font-size:13.5px; }
+.login-row label { display:flex; gap:7px; align-items:center; color:#52627A; font-weight:600; cursor:pointer; }
+.login-row a { color:#0FA8C4; font-weight:700; text-decoration:none; }
+.btn-full { width:100%; }
+.login-foot { margin-top:16px; text-align:center; font-size:12px; color:#8A99B0; }
+
+/* ---------- takeover ---------- */
+.takeover { position:fixed; inset:0; z-index:100; background:#0B1424; display:none; flex-direction:column; }
+.takeover.open { display:flex; animation:rise .45s cubic-bezier(.2,.8,.2,1); }
+@keyframes rise { from { transform:translateY(4%); opacity:0; } }
+.tk-note { display:flex; align-items:center; gap:14px; flex-wrap:wrap; padding:14px 24px; background:#101E33; border-bottom:1px solid #1B2C47; }
+.tk-note .pill-ok { font-size:11px; }
+.tk-note p { font-size:13.5px; color:#A7B7CE; }
+.tk-note p b { color:#F4F8FD; }
+.tk-note code { font-family:Consolas,monospace; font-size:12.5px; color:#22D3EE; background:#0B1424; border:1px solid #1B2C47; border-radius:6px; padding:2px 8px; }
+.tk-note .btn { margin-left:auto; padding:8px 16px; font-size:13.5px; }
+.tk-stage { flex:1; overflow:auto; padding:28px; display:grid; place-items:start center; }
+.tk-stage .frame { width:100%; max-width:960px; }
+
+/* reveal */
+.rv { opacity:0; transform:translateY(18px); transition:opacity .5s ease, transform .5s ease; }
+.rv.in { opacity:1; transform:none; }
+
+/* responsive */
+@media (max-width: 960px) {
+  .hero-in, .mod, .mod.rev { grid-template-columns:1fr; gap:36px; }
+  .mod.rev .mod-copy { order:1; } .mod.rev .mod-visual { order:2; }
+  .grid, .steps { grid-template-columns:1fr 1fr; }
+  .tpl-grid { grid-template-columns:1fr 1fr; }
+  .contact-grid, .pay-grid, .prin, .grid-2 { grid-template-columns:1fr; }
+  .nav-links { display:none; }
+}
+@media (max-width: 600px) {
+  .grid, .steps, .stat-row { grid-template-columns:1fr; }
+  .tpl-grid { grid-template-columns:1fr; }
+  .hero { padding:56px 0 64px; }
+  .sec { padding:60px 0; }
+  .band { padding:48px 0 42px; }
+  .app-nav { display:none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ======================= NAV ======================= -->
+<nav class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#/">
+      <span class="brand-tile" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M21 4 3 11l7 2.5L12.5 21 21 4Z" fill="#062A33"/></svg></span>
+      <span class="brand-name">YourBooking<small>Travel Suite</small></span>
+    </a>
+    <div class="nav-links">
+      <a href="#/" data-nav="home">Home</a>
+      <a href="#/suite" data-nav="suite">The Suite</a>
+      <a href="#/website" data-nav="website">Your Website</a>
+      <a href="#/payment" data-nav="payment">Payment</a>
+      <a href="#/about" data-nav="about">About</a>
+      <a href="#/contact" data-nav="contact">Contact</a>
+    </div>
+    <a class="btn btn-cyan" href="#/login">Login</a>
+  </div>
+</nav>
+
+<!-- ======================= HOME ======================= -->
+<main class="page" id="pg-home">
+  <header class="hero">
+    <div class="wrap hero-in">
+      <div>
+        <span class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="#22D3EE" aria-hidden="true"><path d="M12 1.8 14 8l6.2-2L18 12l6.2 2-6.2 2 2.2 6-6.2-2-2 6.2L10 20l-6.2 2L6 16l-6.2-2L6 12 3.8 6 10 8l2-6.2Z"/></svg>
+          For Umrah, Haj &amp; travel companies
+        </span>
+        <h1>Your whole travel business, <em>behind one login</em>.</h1>
+        <p class="lede">
+          YourBooking runs your Umrah and Haj groups, flight bookings, land packages and
+          accounts — and publishes your own customer website. This page is the front door;
+          sign in and it becomes your dashboard.
+        </p>
+        <div class="hero-cta">
+          <a class="btn btn-cyan" href="#/login">Login to your account</a>
+          <a class="btn btn-line" href="#/suite">See what's inside</a>
+        </div>
+        <p class="hero-note"><strong>Already signed in?</strong> Opening this page takes you straight to your dashboard.</p>
+      </div>
+      <div class="frame rv" aria-label="Preview of the YourBooking dashboard">
+        <div class="frame-bar">
+          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+          <span class="frame-url">yourbooking.in/<b>Dashboard</b></span>
+        </div>
+        <div class="app-top">
+          <span class="app-logo"><span class="brand-tile" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M21 4 3 11l7 2.5L12.5 21 21 4Z" fill="#062A33"/></svg></span>YourBooking</span>
+          <span class="app-nav"><span class="on">Home</span><span>Umrah &amp; Haj</span><span>Land Package</span><span>Airlines</span><span>Accounts</span><span>Website</span></span>
+          <span class="app-user">H</span>
+        </div>
+        <div class="app-body">
+          <div class="stat-row">
+            <div class="stat"><small>Active groups</small><b>6</b></div>
+            <div class="stat"><small>Seats filled</small><b>212<i> / 260</i></b></div>
+            <div class="stat"><small>Enquiries this week</small><b>9</b></div>
+          </div>
+          <div class="mini-table">
+            <header>Upcoming departures</header>
+            <div class="mrow"><span class="nm">Shawwal Economy — 14 days</span><span class="dt">01 Sep</span><span class="pill pill-ok">32 / 40</span></div>
+            <div class="mrow"><span class="nm">Safar Premium — 21 days</span><span class="dt">18 Sep</span><span class="pill pill-ok">38 / 45</span></div>
+            <div class="mrow"><span class="nm">Rabi al-Awwal Deluxe — 10 days</span><span class="dt">04 Oct</span><span class="pill pill-warn">Filling fast</span></div>
+          </div>
+          <div class="bars" aria-hidden="true">
+            <i style="height:34%"></i><i style="height:52%"></i><i style="height:41%"></i><i style="height:66%"></i>
+            <i style="height:58%"></i><i style="height:79%"></i><i style="height:70%"></i><i style="height:92%"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="facts">
+    <div class="wrap facts-in">
+      <span class="fact"><b>12+</b><span>travel companies live</span></span>
+      <span class="fact"><b>8</b><span>customer website themes</span></span>
+      <span class="fact"><b>4</b><span>products: Umrah · Haj · Flights · Land</span></span>
+      <span class="fact"><b>1</b><span>login for your whole team</span></span>
+    </div>
+  </div>
+
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <span class="eyebrow"><svg viewBox="0 0 24 24" fill="#0FA8C4" aria-hidden="true"><path d="M12 1.8 14 8l6.2-2L18 12l6.2 2-6.2 2 2.2 6-6.2-2-2 6.2L10 20l-6.2 2L6 16l-6.2-2L6 12 3.8 6 10 8l2-6.2Z"/></svg>Two products, one system</span>
+        <h2>The suite runs the business. The website brings it in.</h2>
+        <p>Every company gets the full back-office suite. Add the customer website when you want your packages selling online — it reads straight from what your team already manages.</p>
+      </div>
+      <div class="grid-2">
+        <div class="card rv">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#0FA8C4" stroke-width="1.8"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18M8 21h8"/></svg></span>
+          <h3>The Suite — your back office</h3>
+          <p>Groups, bookings, passengers, flights, land packages, advances, expenses and invoices. Branches and roles decide who sees what.</p>
+          <a class="more" href="#/suite">Explore the modules →</a>
+        </div>
+        <div class="card rv">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#0FA8C4" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 4 5.7 4 9s-1.5 6.4-4 9c-2.5-2.6-4-5.7-4-9s1.5-6.4 4-9Z"/></svg></span>
+          <h3>Your Website — your shop front</h3>
+          <p>Your own public site in one of 8 themes. Packages, flights and services you publish appear automatically, and enquiries land back in your dashboard.</p>
+          <a class="more" href="#/website">See the themes →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec alt">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <span class="eyebrow"><svg viewBox="0 0 24 24" fill="#0FA8C4" aria-hidden="true"><path d="M12 1.8 14 8l6.2-2L18 12l6.2 2-6.2 2 2.2 6-6.2-2-2 6.2L10 20l-6.2 2L6 16l-6.2-2L6 12 3.8 6 10 8l2-6.2Z"/></svg>From sign-up to selling</span>
+        <h2>Three steps and your agency is running on it</h2>
+      </div>
+      <div class="steps">
+        <div class="step rv"><h3>We set up your company</h3><p>Your branches, staff logins, masters and module permissions are configured for you — plus your website theme and branding if you take it.</p></div>
+        <div class="step rv"><h3>Your team runs the day-to-day</h3><p>Groups, bookings, passengers, advances and expenses — everyone works in one system instead of registers and spreadsheets.</p></div>
+        <div class="step rv"><h3>Your customers see a real website</h3><p>Published packages go live on your own site with galleries, flight details and an enquiry form that lands back in your dashboard.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-band">
+    <div class="wrap cta-in">
+      <div>
+        <h2>See it with your own packages in it.</h2>
+        <p>Tell us about your agency and we'll set up your company, your masters and your website theme.</p>
+      </div>
+      <a class="btn btn-cyan" href="#/contact">Talk to us</a>
+    </div>
+  </div>
+</main>
+
+<!-- ======================= THE SUITE ======================= -->
+<main class="page" id="pg-suite">
+  <div class="band">
+    <div class="wrap">
+      <span class="eyebrow"><svg viewBox="0 0 24 24" fill="#22D3EE" aria-hidden="true"><path d="M12 1.8 14 8l6.2-2L18 12l6.2 2-6.2 2 2.2 6-6.2-2-2 6.2L10 20l-6.2 2L6 16l-6.2-2L6 12 3.8 6 10 8l2-6.2Z"/></svg>The Suite</span>
+      <h1>Built around how travel agencies actually work</h1>
+      <p class="lede">Not a generic CRM with travel labels — groups, seats, sectors, advances and balances are first-class. These are the modules your team signs into.</p>
+    </div>
+  </div>
+
+  <section class="sec">
+    <div class="wrap">
+
+      <div class="mod rv">
+        <div class="mod-copy">
+          <span class="eyebrow">Umrah &amp; Haj</span>
+          <h3>Groups that know their seats, nights and prices</h3>
+          <p>Create a group with or without flights, and the suite keeps count of everything that matters.</p>
+          <ul>
+            <li>Seat capacity and live booked counts per group</li>
+            <li>Makkah and Madinah hotels with nights worked out from real dates</li>
+            <li>Room-type pricing — the room charge flows into each adult's fare</li>
+            <li>Per-passenger services, tracked and priced individually</li>
+            <li>Change a booking's group and every passenger re-prices, with an old-vs-new comparison before you commit</li>
+          </ul>
+        </div>
+        <div class="mod-visual">
+          <div class="frame">
+            <div class="frame-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="frame-url">yourbooking.in/<b>UmrahGroups</b></span></div>
+            <div class="app-body">
+              <div class="mini-table">
+                <header>Umrah groups</header>
+                <div class="mrow"><span class="nm">Shawwal Economy — 14 days</span><span class="dt">7N Makkah · 6N Madinah</span><span class="pill pill-ok">32 / 40</span></div>
+                <div class="mrow"><span class="nm">Safar Premium — 21 days</span><span class="dt">10N Makkah · 10N Madinah</span><span class="pill pill-ok">38 / 45</span></div>
+                <div class="mrow"><span class="nm">Rabi al-Awwal Deluxe — 10 days</span><span class="dt">5N Makkah · 4N Madinah</span><span class="pill pill-warn">Filling fast</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mod rev rv">
+        <div class="mod-copy">
+          <span class="eyebrow">Airlines</span>
+          <h3>Flights, schedules and your own seat blocks</h3>
+          <p>From airline masters to blocked inventory, the flight side speaks the same language as your groups.</p>
+          <ul>
+            <li>Flight masters and schedules with departure and arrival airports</li>
+            <li>Airline blocking — hold your own allocation and sell against it</li>
+            <li>Adult, child and infant fares per sector</li>
+            <li>Airline logos on masters, bookings and your public website</li>
+            <li>Group flights appear automatically on the group and its website page</li>
+          </ul>
+        </div>
+        <div class="mod-visual">
+          <div class="frame">
+            <div class="frame-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="frame-url">yourbooking.in/<b>Airlines</b></span></div>
+            <div class="app-body">
+              <div class="mini-table">
+                <header>Blocked seats</header>
+                <div class="mrow"><span class="nm">HYD → JED · 08:00 non-stop</span><span class="dt">01 Sep</span><span class="pill pill-ok">20 held</span></div>
+                <div class="mrow"><span class="nm">JED → HYD · 14:00 non-stop</span><span class="dt">14 Sep</span><span class="pill pill-ok">20 held</span></div>
+                <div class="mrow"><span class="nm">HYD → JED · 22:30 1 stop</span><span class="dt">18 Sep</span><span class="pill pill-warn">6 left</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mod rv">
+        <div class="mod-copy">
+          <span class="eyebrow">Land Package</span>
+          <h3>Hotels, transport, ziyarat and visas — priced properly</h3>
+          <p>Everything on the ground is a service with its own cost, so packages price themselves instead of living in someone's head.</p>
+          <ul>
+            <li>Hotels with categories, room types and check-in dates</li>
+            <li>Transport by route, trip and vehicle — AC and Non-AC priced apart</li>
+            <li>Ziyarat and local transfers charged per vehicle or per person</li>
+            <li>Visa services by category, priced per adult, child and infant</li>
+            <li>Price masters so quotes come from rates, not memory</li>
+          </ul>
+        </div>
+        <div class="mod-visual">
+          <div class="frame">
+            <div class="frame-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="frame-url">yourbooking.in/<b>LandPackage</b></span></div>
+            <div class="app-body">
+              <div class="mini-table">
+                <header>Package build — Makkah 5N</header>
+                <div class="mrow"><span class="nm">Hotel · Al Safwah — Double</span><span class="dt">5 nights</span><span class="pill pill-ok">Priced</span></div>
+                <div class="mrow"><span class="nm">Transport · Local Ziyarath — Bus</span><span class="dt">One way</span><span class="pill pill-ok">Per vehicle</span></div>
+                <div class="mrow"><span class="nm">Visa · Umrah</span><span class="dt">Per person</span><span class="pill pill-ok">Priced</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mod rev rv">
+        <div class="mod-copy">
+          <span class="eyebrow">Accounts</span>
+          <h3>Advances, balances and expenses that reconcile</h3>
+          <p>The money side lives beside the travel side, so nobody chases figures across notebooks at month end.</p>
+          <ul>
+            <li>Advances against bookings with live balance computed from the booking itself</li>
+            <li>Expenses by category — general, group, individual, land package, flight</li>
+            <li>Printable invoices for bookings and services</li>
+            <li>Hire reports — bus and car, by kilometre and by amount</li>
+            <li>Cancellations follow versioned policies, frozen per booking at booking time</li>
+          </ul>
+        </div>
+        <div class="mod-visual">
+          <div class="frame">
+            <div class="frame-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="frame-url">yourbooking.in/<b>Accounts</b></span></div>
+            <div class="app-body">
+              <div class="stat-row">
+                <div class="stat"><small>Advances today</small><b>₹1.4L</b></div>
+                <div class="stat"><small>Balances due</small><b>₹4.2L</b></div>
+                <div class="stat"><small>Expenses this month</small><b>₹86K</b></div>
+              </div>
+              <div class="mini-table">
+                <header>Recent advances</header>
+                <div class="mrow"><span class="nm">Booking #1042 · Shawwal Economy</span><span class="dt">₹50,000</span><span class="pill pill-ok">Received</span></div>
+                <div class="mrow"><span class="nm">Booking #1038 · Safar Premium</span><span class="dt">₹35,000</span><span class="pill pill-warn">Balance due</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mod rv">
+        <div class="mod-copy">
+          <span class="eyebrow">Foundation</span>
+          <h3>Masters, branches, roles and messages</h3>
+          <p>The quiet machinery that keeps every screen consistent and every staff member in their lane.</p>
+          <ul>
+            <li>Masters for countries, cities, hotels, airlines, airports, vehicles, room types, banks and expense categories</li>
+            <li>Company and branch structure with per-module permissions</li>
+            <li>Every list scoped to your company — your data stays yours</li>
+            <li>SMS and WhatsApp packs for booking notifications</li>
+          </ul>
+        </div>
+        <div class="mod-visual">
+          <div class="frame">
+            <div class="frame-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="frame-url">yourbooking.in/<b>Settings</b></span></div>
+            <div class="app-body">
+              <div class="mini-table">
+                <header>Roles in your company</header>
+                <div class="mrow"><span class="nm">Company Admin</span><span class="dt">All modules</span><span class="pill pill-ok">2 users</span></div>
+                <div class="mrow"><span class="nm">Branch Admin</span><span class="dt">Branch scope</span><span class="pill pill-ok">3 users</span></div>
+                <div class="mrow"><span class="nm">Booking staff</span><span class="dt">Bookings &amp; advances</span><span class="pill pill-ok">6 users</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="cta-band">
+    <div class="wrap cta-in">
+      <div><h2>Want a walkthrough with your data?</h2><p>We'll set up a company for you and load a sample group so you can click through everything above.</p></div>
+      <a class="btn btn-cyan" href="#/contact">Talk to us</a>
+    </div>
+  </div>
+</main>
+
+<!-- ======================= YOUR WEBSITE ======================= -->
+<main class="page" id="pg-website">
+  <div class="band">
+    <div class="wrap">
+      <span class="eyebrow"><svg viewBox="0 0 24 24" fill="#22D3EE" aria-hidden="true"><path d="M12 1.8 14 8l6.2-2L18 12l6.2 2-6.2 2 2.2 6-6.2-2-2 6.2L10 20l-6.2 2L6 16l-6.2-2L6 12 3.8 6 10 8l2-6.2Z"/></svg>Your Website</span>
+      <h1>Your own site, selling while your team sleeps</h1>
+      <p class="lede">Choose it with the suite and your company gets a public website in your name — packages, flights and services published straight from the dashboard your team already uses.</p>
+    </div>
+  </div>
+
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <span class="eyebrow"><svg viewBox="0 0 24 24" fill="#0FA8C4" aria-hidden="true"><path d="M12 1.8 14 8l6.2-2L18 12l6.2 2-6.2 2 2.2 6-6.2-2-2 6.2L10 20l-6.2 2L6 16l-6.2-2L6 12 3.8 6 10 8l2-6.2Z"/></svg>No double entry</span>
+        <h2>Publish from the suite. It appears on your site.</h2>
+        <p>The website is a window onto what your team already manages — not a second system to keep in sync.</p>
+      </div>
+      <div class="grid">
+        <div class="card rv">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#0FA8C4" stroke-width="1.8"><path d="M3 21v-8l9-6 9 6v8"/><path d="M9 21v-5h6v5"/></svg></span>
+          <h3>Umrah packages</h3>
+          <p>Groups you publish show dates, nights in Makkah and Madinah, seats, prices — and the group's flights with airline logos, automatically.</p>
+        </div>
+        <div class="card rv">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#0FA8C4" stroke-width="1.8"><path d="M21 4 3 11l7 2.5L12.5 21 21 4Z"/></svg></span>
+          <h3>Flights &amp; land services</h3>
+          <p>Sell seats from your blocks and land services — hotels, transport, ziyarat, visas — each with fares, details and photo galleries.</p>
+        </div>
+        <div class="card rv">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#0FA8C4" stroke-width="1.8"><path d="M21 12a9 9 0 1 1-9-9"/><path d="m15 9 6-6M16 3h5v5"/></svg></span>
+          <h3>Enquiries come home</h3>
+          <p>Every enquiry form on your site lands in your dashboard's Enquiries list — no shared inbox, no lost leads.</p>
+        </div>
+        <div class="card rv">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#0FA8C4" stroke-width="1.8"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="m3 13 5-4 4 3 4-4 5 4"/></svg></span>
+          <h3>Galleries &amp; reviews</h3>
+          <p>Multi-photo galleries on every package, a company gallery, and customer reviews you curate from the dashboard.</p>
+        </div>
+        <div class="card rv">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#0FA8C4" stroke-width="1.8"><circle cx="12" cy="12" r="3.2"/><path d="M19 12a7 7 0 0 1-.1 1.2l2 1.6-2 3.4-2.4-1a7 7 0 0 1-2 1.2L14 21h-4l-.5-2.6a7 7 0 0 1-2-1.2l-2.4 1-2-3.4 2-1.6A7 7 0 0 1 5 12c0-.4 0-.8.1-1.2l-2-1.6 2-3.4 2.4 1a7 7 0 0 1 2-1.2L10 3h4l.5 2.6a7 7 0 0 1 2 1.2l2.4-1 2 3.4-2 1.6c.1.4.1.8.1 1.2Z"/></svg></span>
+          <h3>Yours, not shared</h3>
+          <p>Your name, your branding, your contact details, your social links — every company's site stands alone.</p>
+        </div>
+        <div class="card rv">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#0FA8C4" stroke-width="1.8"><path d="M12 3v18M3 12h18"/><circle cx="12" cy="12" r="9"/></svg></span>
+          <h3>Switch themes any time</h3>
+          <p>Pick one of eight themes; change later without losing anything. Packages, photos and reviews carry over untouched.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec alt">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <span class="eyebrow"><svg viewBox="0 0 24 24" fill="#0FA8C4" aria-hidden="true"><path d="M12 1.8 14 8l6.2-2L18 12l6.2 2-6.2 2 2.2 6-6.2-2-2 6.2L10 20l-6.2 2L6 16l-6.2-2L6 12 3.8 6 10 8l2-6.2Z"/></svg>Eight themes</span>
+        <h2>A look your customers trust, hand-crafted eight ways</h2>
+        <p>Each theme is a complete site — home, packages, flights, services, gallery, reviews, about and contact — with its own typography and character.</p>
+      </div>
+      <div class="tpl-grid rv">
+        <figure class="tpl"><span class="sw"><i style="background:#123A32"></i><i style="background:#C8A24B"></i><i style="background:#F4EFE4"></i></span><figcaption><b>Qafila</b><small>Caravan classic</small></figcaption></figure>
+        <figure class="tpl"><span class="sw"><i style="background:#3B2A1E"></i><i style="background:#B8804A"></i><i style="background:#F2E8DC"></i></span><figcaption><b>Heritage</b><small>Warm &amp; established</small></figcaption></figure>
+        <figure class="tpl"><span class="sw"><i style="background:#0E2A47"></i><i style="background:#2E7DD1"></i><i style="background:#EFF5FC"></i></span><figcaption><b>Voyage</b><small>Modern airline</small></figcaption></figure>
+        <figure class="tpl"><span class="sw"><i style="background:#27333B"></i><i style="background:#7FA8A0"></i><i style="background:#F0F4F3"></i></span><figcaption><b>Serene</b><small>Calm &amp; minimal</small></figcaption></figure>
+        <figure class="tpl"><span class="sw"><i style="background:#1E1A2E"></i><i style="background:#8E7CC3"></i><i style="background:#F3F1F9"></i></span><figcaption><b>Noor</b><small>Soft night light</small></figcaption></figure>
+        <figure class="tpl"><span class="sw"><i style="background:#14301F"></i><i style="background:#3E8E5A"></i><i style="background:#EDF6F0"></i></span><figcaption><b>Minara</b><small>Fresh green</small></figcaption></figure>
+        <figure class="tpl"><span class="sw"><i style="background:#20355C"></i><i style="background:#C24B4B"></i><i style="background:#F4EFE6"></i></span><figcaption><b>Zellij</b><small>Patterned craft</small></figcaption></figure>
+        <figure class="tpl"><span class="sw"><i style="background:#231F1A"></i><i style="background:#C9A227"></i><i style="background:#F5F1E8"></i></span><figcaption><b>Mishkat</b><small>Lantern gold</small></figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-band">
+    <div class="wrap cta-in">
+      <div><h2>Want your packages on a site like this?</h2><p>Tell us your company name and pick a theme — we set up the rest.</p></div>
+      <a class="btn btn-cyan" href="#/contact">Talk to us</a>
+    </div>
+  </div>
+</main>
+
+<!-- ======================= PAYMENT ======================= -->
+<main class="page" id="pg-payment">
+  <div class="band">
+    <div class="wrap">
+      <span class="eyebrow"><svg viewBox="0 0 24 24" fill="#22D3EE" aria-hidden="true"><path d="M12 1.8 14 8l6.2-2L18 12l6.2 2-6.2 2 2.2 6-6.2-2-2 6.2L10 20l-6.2 2L6 16l-6.2-2L6 12 3.8 6 10 8l2-6.2Z"/></svg>Payment</span>
+      <h1>Subscription, renewals and message packs</h1>
+      <p class="lede">YourBooking is licensed per company. Your activation has a validity period; renew before it ends and your team never notices a thing.</p>
+    </div>
+  </div>
+
+  <section class="sec">
+    <div class="wrap">
+      <div class="pay-grid">
+        <div class="pay-card rv">
+          <span class="pay-tag">Subscription</span>
+          <h3>Company licence &amp; renewal</h3>
+          <p>One licence covers your whole company — every branch, every staff login, every module you're subscribed to.</p>
+          <ul>
+            <li>Validity shown inside the app, so admins see renewal coming</li>
+            <li>All branches and users under one company licence</li>
+            <li>Website product included when you opt for it</li>
+            <li>Plans are quoted per company — talk to us for yours</li>
+          </ul>
+          <a class="btn btn-cyan" href="#/contact">Request a renewal</a>
+        </div>
+        <div class="pay-card rv">
+          <span class="pay-tag">Messaging</span>
+          <h3>SMS &amp; WhatsApp packs</h3>
+          <p>Booking confirmations and notices go out by SMS and WhatsApp. Packs are prepaid message counts you top up when you run low.</p>
+          <ul>
+            <li>Remaining SMS and WhatsApp counts visible in the app</li>
+            <li>Top up any time — no expiry surprises mid-season</li>
+            <li>Counts are per company, shared across branches</li>
+          </ul>
+          <a class="btn btn-line-dk" href="#/contact">Top up a pack</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec alt">
+    <div class="wrap">
+      <div class="sec-head rv" style="margin-bottom:28px;">
+        <h2>How payment works today</h2>
+        <p>Renewals and top-ups are handled directly with our team — request, pay, and we activate. Online payment from this page is planned; until then, we confirm every activation personally.</p>
+      </div>
+      <div class="steps">
+        <div class="step rv"><h3>Tell us what you need</h3><p>Renewal, a new branch, the website product or a message pack — one line on the contact page is enough.</p></div>
+        <div class="step rv"><h3>Pay by transfer</h3><p>We share the amount and bank details against a proper invoice in your company's name.</p></div>
+        <div class="step rv"><h3>We activate</h3><p>Your validity extends or your pack credits the same working day, and you see it in the app.</p></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ======================= ABOUT ======================= -->
+<main class="page" id="pg-about">
+  <div class="band">
+    <div class="wrap">
+      <span class="eyebrow"><svg viewBox="0 0 24 24" fill="#22D3EE" aria-hidden="true"><path d="M12 1.8 14 8l6.2-2L18 12l6.2 2-6.2 2 2.2 6-6.2-2-2 6.2L10 20l-6.2 2L6 16l-6.2-2L6 12 3.8 6 10 8l2-6.2Z"/></svg>About Your Booking</span>
+      <h1>Software shaped by the Umrah counter, not the conference room</h1>
+      <p class="lede">YourBooking exists because group travel doesn't fit generic booking software. Seats in a group, nights split between two holy cities, advances trickling in before departure — that's the shape of the business, so it's the shape of the product.</p>
+    </div>
+  </div>
+
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <span class="eyebrow"><svg viewBox="0 0 24 24" fill="#0FA8C4" aria-hidden="true"><path d="M12 1.8 14 8l6.2-2L18 12l6.2 2-6.2 2 2.2 6-6.2-2-2 6.2L10 20l-6.2 2L6 16l-6.2-2L6 12 3.8 6 10 8l2-6.2Z"/></svg>What we believe</span>
+        <h2>Four principles behind every screen</h2>
+      </div>
+      <div class="prin">
+        <div class="card rv">
+          <h3>One login for the whole business</h3>
+          <p>Groups, flights, land services, accounts and your website live in one place, under one login per staff member — with roles deciding who sees what.</p>
+        </div>
+        <div class="card rv">
+          <h3>Your data is yours</h3>
+          <p>Every list, booking and passenger record is scoped to your company. Your customers, your rates and your website content belong to you.</p>
+        </div>
+        <div class="card rv">
+          <h3>Built around groups</h3>
+          <p>The group — its dates, hotels, flights and seats — is the centre of the product, because it's the centre of your business.</p>
+        </div>
+        <div class="card rv">
+          <h3>Selling should be included</h3>
+          <p>Back office and shop front are two ends of one flow, so the customer website reads from the suite instead of being another system to feed.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec alt">
+    <div class="wrap">
+      <div class="sec-head rv" style="margin-bottom:28px;">
+        <h2>Who runs on YourBooking</h2>
+        <p>Umrah and Haj operators first — and with them, agencies selling flights from blocked inventory and land packages across Saudi Arabia, the UAE and beyond. Today 12+ travel companies run their operations on the suite, several with their own customer websites.</p>
+      </div>
+      <div class="facts" style="border-radius:16px; border:1px solid #16263F;">
+        <div class="facts-in" style="padding:22px 28px;">
+          <span class="fact"><b>12+</b><span>companies live</span></span>
+          <span class="fact"><b>4</b><span>products under one roof</span></span>
+          <span class="fact"><b>8</b><span>website themes</span></span>
+          <span class="fact"><b>3</b><span>role levels: company · branch · staff</span></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-band">
+    <div class="wrap cta-in">
+      <div><h2>See if it fits your agency.</h2><p>A short call and a sample company is usually enough to know.</p></div>
+      <a class="btn btn-cyan" href="#/contact">Contact us</a>
+    </div>
+  </div>
+</main>
+
+<!-- ======================= CONTACT ======================= -->
+<main class="page" id="pg-contact">
+  <div class="band">
+    <div class="wrap">
+      <span class="eyebrow"><svg viewBox="0 0 24 24" fill="#22D3EE" aria-hidden="true"><path d="M12 1.8 14 8l6.2-2L18 12l6.2 2-6.2 2 2.2 6-6.2-2-2 6.2L10 20l-6.2 2L6 16l-6.2-2L6 12 3.8 6 10 8l2-6.2Z"/></svg>Contact Us</span>
+      <h1>Talk to the people who built it</h1>
+      <p class="lede">New company, renewal, website theme or a question about a module — it all comes to the same team.</p>
+    </div>
+  </div>
+
+  <section class="sec">
+    <div class="wrap contact-grid">
+      <div class="form rv">
+        <div class="fld"><label for="c-name">Your name</label><input id="c-name" type="text" placeholder="Full name"></div>
+        <div class="fld"><label for="c-co">Company / agency</label><input id="c-co" type="text" placeholder="Your agency's name"></div>
+        <div class="fld"><label for="c-mob">Mobile number</label><input id="c-mob" type="tel" inputmode="numeric" placeholder="10-digit mobile number"></div>
+        <div class="fld"><label for="c-msg">What do you need?</label><textarea id="c-msg" rows="4" placeholder="e.g. We run Umrah groups from Hyderabad and want the suite with a website"></textarea></div>
+        <button class="btn btn-cyan btn-full" onclick="return false;">Send enquiry</button>
+        <p class="form-note">Mockup only — nothing is sent.</p>
+      </div>
+      <div class="contact-card rv">
+        <h3>For any queries</h3>
+        <p>We usually respond within one working day.</p>
+        <div class="contact-line">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#22D3EE" stroke-width="1.8"><path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/></svg>
+          <span>sales@databricks.online</span>
+        </div>
+        <div class="contact-line">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#22D3EE" stroke-width="1.8"><path d="M5 4h4l2 5-2.5 1.5a12 12 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg>
+          <span>+91 92978 76666</span>
+        </div>
+        <div class="contact-line">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#22D3EE" stroke-width="1.8"><circle cx="12" cy="10" r="3"/><path d="M12 2a8 8 0 0 1 8 8c0 5.4-8 12-8 12S4 15.4 4 10a8 8 0 0 1 8-8Z"/></svg>
+          <span>Hyderabad, India</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ======================= TERMS ======================= -->
+<main class="page" id="pg-terms">
+  <div class="band">
+    <div class="wrap">
+      <span class="eyebrow"><svg viewBox="0 0 24 24" fill="#22D3EE" aria-hidden="true"><path d="M12 1.8 14 8l6.2-2L18 12l6.2 2-6.2 2 2.2 6-6.2-2-2 6.2L10 20l-6.2 2L6 16l-6.2-2L6 12 3.8 6 10 8l2-6.2Z"/></svg>Term &amp; Conditions</span>
+      <h1>Terms of using YourBooking</h1>
+    </div>
+  </div>
+  <section class="sec">
+    <div class="wrap legal">
+      <span class="draft">⚠ Draft for internal review — not legal advice; have this reviewed before publishing</span>
+      <h3>1. The service</h3>
+      <p>YourBooking provides business software for travel companies: the back-office suite and, where subscribed, a public customer website. The service is provided to companies, for use by their authorised staff.</p>
+      <h3>2. Accounts and access</h3>
+      <p>Staff sign in with a mobile number and password issued under your company. You are responsible for keeping credentials safe and for what is done under your company's logins. Access levels follow the roles your company admin assigns.</p>
+      <h3>3. Subscription and renewal</h3>
+      <p>The service is licensed per company for an activation period. When the period ends without renewal, access may be suspended until renewal is completed. SMS and WhatsApp message packs are prepaid counts consumed as messages are sent.</p>
+      <h3>4. Your data</h3>
+      <p>Bookings, passenger records, rates and website content entered by your company remain your company's data. We process it to operate the service and do not sell it.</p>
+      <h3>5. Passenger information</h3>
+      <p>Your company is responsible for collecting passenger details — including passport and identity information — lawfully and with the passenger's knowledge, and for their accuracy.</p>
+      <h3>6. Availability and support</h3>
+      <p>We aim to keep the service available and to resolve issues promptly during working hours. Planned maintenance is notified in advance where possible.</p>
+      <h3>7. Acceptable use</h3>
+      <ul>
+        <li>No attempts to access another company's data</li>
+        <li>No use of messaging packs for content unrelated to your travel business</li>
+        <li>No reselling of the service without a written agreement</li>
+      </ul>
+      <h3>8. Liability</h3>
+      <p>The service supports your business decisions but does not replace them; fares, visas and travel arrangements remain between your company, your customers and your suppliers.</p>
+      <h3>9. Changes</h3>
+      <p>We may update these terms; meaningful changes are notified to company admins before they take effect.</p>
+      <p class="upd">Draft — placeholder effective date to be set on publication.</p>
+    </div>
+  </section>
+</main>
+
+<!-- ======================= PRIVACY ======================= -->
+<main class="page" id="pg-privacy">
+  <div class="band">
+    <div class="wrap">
+      <span class="eyebrow"><svg viewBox="0 0 24 24" fill="#22D3EE" aria-hidden="true"><path d="M12 1.8 14 8l6.2-2L18 12l6.2 2-6.2 2 2.2 6-6.2-2-2 6.2L10 20l-6.2 2L6 16l-6.2-2L6 12 3.8 6 10 8l2-6.2Z"/></svg>Privacy Policy</span>
+      <h1>What we store, and why</h1>
+    </div>
+  </div>
+  <section class="sec">
+    <div class="wrap legal">
+      <span class="draft">⚠ Draft for internal review — not legal advice; have this reviewed before publishing</span>
+      <h3>1. Information we hold</h3>
+      <ul>
+        <li><b>Company and staff details</b> — names, mobile numbers, email addresses and role assignments used for sign-in and administration.</li>
+        <li><b>Passenger records</b> — details your company enters to run bookings, which can include passport information and identity numbers where your processes require them.</li>
+        <li><b>Business records</b> — bookings, advances, expenses, invoices and website content belonging to your company.</li>
+      </ul>
+      <h3>2. Why we process it</h3>
+      <p>To operate the suite: creating bookings and invoices, calculating balances, publishing your website where subscribed, and sending booking notifications by SMS, WhatsApp and email.</p>
+      <h3>3. Sharing</h3>
+      <p>Booking details are shared only as needed to fulfil travel arrangements — for example with airlines, hotels and transport providers — and with the messaging and email providers that deliver notifications. We do not sell data.</p>
+      <h3>4. Storage and retention</h3>
+      <p>Data is stored securely and retained while your company subscription is active, and thereafter as required for legal and accounting purposes.</p>
+      <h3>5. Your choices</h3>
+      <p>Company admins control staff access and can correct or remove records. Passengers can approach the travel company that holds their booking to correct their details.</p>
+      <h3>6. Cookies</h3>
+      <p>The applications use session cookies for sign-in. The public websites use only what is needed for the site to function.</p>
+      <h3>7. Contact</h3>
+      <p>Privacy questions reach us through the Contact page.</p>
+      <p class="upd">Draft — placeholder effective date to be set on publication.</p>
+    </div>
+  </section>
+</main>
+
+<!-- ======================= LOGIN ======================= -->
+<main class="page" id="pg-login">
+  <div class="login-page">
+    <div class="login">
+      <div class="login-head">
+        <span class="brand-tile" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M21 4 3 11l7 2.5L12.5 21 21 4Z" fill="#062A33"/></svg></span>
+        <div>
+          <h3>Sign in to YourBooking</h3>
+          <small>Your dashboard is one step away</small>
+        </div>
+      </div>
+      <div class="login-body">
+        <!-- Same fields as the real app: /Account/UserLogin (mobilenumber, password) -->
+        <div class="fld"><label for="mob">Mobile Number</label><input id="mob" type="tel" inputmode="numeric" autocomplete="username" placeholder="10-digit mobile number"></div>
+        <div class="fld"><label for="pwd">Password</label><input id="pwd" type="password" autocomplete="current-password" placeholder="Your password"></div>
+        <div class="login-row">
+          <label><input type="checkbox"> Remember me</label>
+          <a href="#/login" onclick="return false;">Forgot Password?</a>
+        </div>
+        <button class="btn btn-cyan btn-full" onclick="doLogin()">Sign in</button>
+        <p class="login-foot">Mockup only — no details are sent anywhere.</p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- ======================= FOOTER ======================= -->
+<footer>
+  <div class="wrap foot-in">
+    <a class="brand" href="#/">
+      <span class="brand-tile" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M21 4 3 11l7 2.5L12.5 21 21 4Z" fill="#062A33"/></svg></span>
+      <span class="brand-name">YourBooking<small>Travel Suite</small></span>
+    </a>
+    <div class="foot-links">
+      <a href="#/">Home</a>
+      <a href="#/about">About Your Booking</a>
+      <a href="#/terms">Term &amp; Conditions</a>
+      <a href="#/privacy">Privacy Policy</a>
+      <a href="#/contact">Contact Us</a>
+      <a href="#/payment">Payment</a>
+    </div>
+    <div class="foot-copy">
+      <span>© 2026 YourBooking. All rights reserved.</span>
+      <span>Design mockup — for internal review.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ======================= TAKEOVER ======================= -->
+<div class="takeover" id="takeover" role="dialog" aria-modal="true" aria-label="After login preview">
+  <div class="tk-note">
+    <span class="pill pill-ok">Signed in</span>
+    <p><b>This is the moment the website becomes the app.</b> In the real suite, login redirects to <code>/Dashboard/Index</code> — same address, your workspace.</p>
+    <button class="btn btn-line" onclick="closeTakeover()">Back to website</button>
+  </div>
+  <div class="tk-stage">
+    <div class="frame" style="width:100%">
+      <div class="frame-bar">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        <span class="frame-url">yourbooking.in/<b>Dashboard/Index</b></span>
+      </div>
+      <div class="app-top">
+        <span class="app-logo"><span class="brand-tile" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M21 4 3 11l7 2.5L12.5 21 21 4Z" fill="#062A33"/></svg></span>YourBooking</span>
+        <span class="app-nav"><span class="on">Home</span><span>Umrah &amp; Haj</span><span>Land Package</span><span>Airlines</span><span>Accounts</span><span>Website</span><span>Settings</span></span>
+        <span class="app-user">H</span>
+      </div>
+      <div class="app-body">
+        <div class="stat-row">
+          <div class="stat"><small>Active groups</small><b>6</b></div>
+          <div class="stat"><small>Seats filled</small><b>212<i> / 260</i></b></div>
+          <div class="stat"><small>Advances pending</small><b>₹4.2L</b></div>
+        </div>
+        <div class="mini-table">
+          <header>Upcoming departures</header>
+          <div class="mrow"><span class="nm">Shawwal Economy — 14 days</span><span class="dt">01 Sep</span><span class="pill pill-ok">32 / 40</span></div>
+          <div class="mrow"><span class="nm">Safar Premium — 21 days</span><span class="dt">18 Sep</span><span class="pill pill-ok">38 / 45</span></div>
+          <div class="mrow"><span class="nm">Rabi al-Awwal Deluxe — 10 days</span><span class="dt">04 Oct</span><span class="pill pill-warn">Filling fast</span></div>
+          <div class="mrow"><span class="nm">Jumada Economy — 14 days</span><span class="dt">22 Oct</span><span class="pill pill-ok">12 / 40</span></div>
+        </div>
+        <div class="bars" aria-hidden="true">
+          <i style="height:34%"></i><i style="height:52%"></i><i style="height:41%"></i><i style="height:66%"></i>
+          <i style="height:58%"></i><i style="height:79%"></i><i style="height:70%"></i><i style="height:92%"></i>
+          <i style="height:64%"></i><i style="height:83%"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  /* ---------- tiny router: one file, real-feeling pages ----------
+     Clicks switch pages directly; the hash is only an enhancement so
+     back/forward and deep links work where the browser supports it.  */
+  var routes = { '': 'home', '#/': 'home', '#/suite': 'suite', '#/website': 'website',
+                 '#/payment': 'payment', '#/about': 'about', '#/contact': 'contact',
+                 '#/terms': 'terms', '#/privacy': 'privacy', '#/login': 'login' };
+  function showKey(key) {
+    document.querySelectorAll('.page').forEach(function (p) { p.classList.remove('show'); });
+    var pg = document.getElementById('pg-' + key);
+    pg.classList.add('show');
+    document.querySelectorAll('[data-nav]').forEach(function (a) {
+      a.classList.toggle('on', a.getAttribute('data-nav') === key);
+    });
+    window.scrollTo(0, 0);
+    observePage(pg);
+    if (key === 'login') setTimeout(function () { var m = document.getElementById('mob'); if (m) m.focus(); }, 80);
+  }
+  function route() { showKey(routes[location.hash] || 'home'); }
+  window.addEventListener('hashchange', route);
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest ? e.target.closest('a[href^="#/"]') : null;
+    if (!a) return;
+    var href = a.getAttribute('href');
+    if (!(href in routes)) return;
+    e.preventDefault();
+    showKey(routes[href]);
+    if (location.protocol !== 'data:') { try { location.hash = href; } catch (x) {} }
+  });
+
+  /* ---------- login demo: the website becomes the app ---------- */
+  var takeover = document.getElementById('takeover');
+  function doLogin() { takeover.classList.add('open'); }
+  function closeTakeover() {
+    takeover.classList.remove('open');
+    showKey('home');
+    if (location.protocol !== 'data:') { try { location.hash = '#/'; } catch (x) {} }
+  }
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeTakeover(); });
+
+  /* ---------- reveal on scroll, re-armed per page ---------- */
+  var io = ('IntersectionObserver' in window) ? new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+  }, { threshold: .12 }) : null;
+  function observePage(pg) {
+    pg.querySelectorAll('.rv:not(.in)').forEach(function (el) {
+      if (io) io.observe(el); else el.classList.add('in');
+    });
+  }
+  route();
+</script>
+
+</body>
+</html>
